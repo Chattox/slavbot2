@@ -1,0 +1,11 @@
+# Misc Python stuff
+.idea/
+__pycache__
+*.pyc
+
+# Actual Slavbot stuff
+sounds/
+keys.py
+*.dll
+*.txt
+*.exe
