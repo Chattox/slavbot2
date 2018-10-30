@@ -5,6 +5,7 @@ import sys
 import discord
 from discord import opus
 import keys
+import slavio as io
 #import slavsound
 import logging
 
@@ -51,5 +52,8 @@ async def on_message(msg):
         cmd = cmd.lower()
         print('COMMAND: %s' % (cmd))
         print('FROM: ' + msg.author.name)
+        if cmd == "read":
+            fileContents = await io.readFile(keys.soundList)
+            print(fileContents)
 
 client.run(keys.client)
