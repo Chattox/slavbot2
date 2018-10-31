@@ -59,6 +59,9 @@ async def on_message(msg):
         sounds = await io.readFile(keys.soundList)
         if cmd == "soundhelp": # Format sound list to PM to user
             soundHelp = "\n\!".join(sounds)
+            await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
+        if cmd in sounds: # Check if command is in the sound list
+            await soundboard.playSound(msg)
 
 
         # TEST TOOL COMMANDS
