@@ -8,6 +8,7 @@ import keys
 import slavio as io
 #import slavsound
 import logging
+import testtools as test
 
 # Create logger, output log to file
 logger = logging.getLogger('discord')
@@ -53,7 +54,8 @@ async def on_message(msg):
         print('COMMAND: %s' % (cmd))
         print('FROM: ' + msg.author.name)
         if cmd == "read":
-            fileContents = await io.readFile(keys.soundList)
-            print(fileContents)
+            await test.readFileTest(args[0])
+        if cmd == "voice":
+            await test.voiceCheck(msg)
 
 client.run(keys.client)
