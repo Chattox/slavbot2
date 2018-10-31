@@ -8,6 +8,6 @@ async def readFileTest(file):
 # Check if user is in a voice channel
 async def voiceCheck(msg):
     if msg.author.voice:
-        print("User is in voice channel")
+        print("User is in voice channel: " + msg.author.voice.channel.name)
     else:
         print("User is not in voice channel")
