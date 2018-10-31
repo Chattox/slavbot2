@@ -53,6 +53,15 @@ async def on_message(msg):
         cmd = cmd.lower()
         print('COMMAND: %s' % (cmd))
         print('FROM: ' + msg.author.name)
+
+        # SOUND COMMANDS
+        # Load sound list from file for checking against command
+        sounds = await io.readFile(keys.soundList)
+        if cmd == "soundhelp": # Format sound list to PM to user
+            soundHelp = "\n\!".join(sounds)
+
+
+        # TEST TOOL COMMANDS
         if cmd == "read":
             await test.readFileTest(args[0])
         if cmd == "voice":
