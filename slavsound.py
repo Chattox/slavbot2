@@ -7,7 +7,13 @@ import keys
 import slavio as io
 
 # Play specific sound on command
-async def playSound(self, sound):
+async def playSound(sound):
     if sound.author.voice: # Check user is in voice channel
-        try:
-            snd = sound.content[1:].split(" ")[0]
+        snd = sound.content[1:].split(" ")[0]
+        print("Playing: " + snd + ".mp3")
+        print("Connecting to: " + sound.author.voice.channel.name)
+        vc = await sound.author.voice.channel.connect()
+        vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"))
+        while vc.is_playing():
+            pass
+        await vc.disconnect()

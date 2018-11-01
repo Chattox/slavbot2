@@ -6,7 +6,7 @@ import discord
 from discord import opus
 import keys
 import slavio as io
-#import slavsound
+import slavsound
 import logging
 import testtools as test
 
@@ -61,7 +61,7 @@ async def on_message(msg):
             soundHelp = "\n\!".join(sounds)
             await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
         if cmd in sounds: # Check if command is in the sound list
-            await soundboard.playSound(msg)
+            await slavsound.playSound(msg)
 
 
         # TEST TOOL COMMANDS
