@@ -41,3 +41,20 @@ async def randSound(msg):
         print("Done.")
     else:
         await msg.channel.send(msg.author.name + ", you're not in a voice channel, блядь!")
+
+# Play a specific command passed by a command other than discord message
+async def funcSound(channel, choice):
+    print("Playing sound: " + choice + "\nIn channel: " + channel.name)
+    print("Connecting...")
+    try:
+        vc = await channel.connect()
+        print("Playing...")
+        vc.play(discord.FFmpegPCMAudio("./sounds/" + choice + ".mp3"))
+        while vc.is_playing():
+            pass
+        await vc.disconnect()
+        print("Done.")
+        print("----------")
+    except discord.ClientException:
+        print("Too much going on at once!")
+        print("----------")

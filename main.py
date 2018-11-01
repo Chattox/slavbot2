@@ -2,9 +2,11 @@
 # Slavic Guacamole
 
 import sys
+import asyncio
 import discord
 from discord import opus
 import keys
+import regularids as regs
 import slavio as io
 import slavsound
 import logging
@@ -85,5 +87,42 @@ async def on_message(msg):
 
         # END OF COMMANDS
         print("----------")
+
+# Listen for people coming in and out of voice channels for log-in/out sounds
+@client.event
+async def on_voice_state_update(member, before, after):
+    for i in regs.users:
+        if member.id == i.id:
+            # Check if user connected to valid channel (came from AFK or new join)
+            was_disconnected = before.channel is None or before.afk is True
+            is_connected = after.channel is not None and after.afk is False
+            was_connect = was_disconnected and is_connected
+
+            # Check if user disconnected
+            was_connected = before.channel is not None and before.afk is False
+            is_disconnected = after.channel is None and before.afk is False
+            was_disconnect = was_connected and is_disconnected
+
+            # If user connected to valid channel, play their join sound
+            if was_connect:
+                if i.logIn != "":
+                    print(i.name + " joined, playing join sound: " + i.logIn)
+                    await asyncio.sleep(1)
+                    await slavsound.funcSound(after.channel, i.logIn)
+                else:
+                    print(i.name + " joined, but they do not have a join sound")
+                    print("----------")
+
+            # If user disconnected from valid channel, play their leave sound
+            if was_disconnect:
+                if i.logOut != "":
+                    print(i.name + " left, playing leave sound: " + i.logOut)
+                    await asyncio.sleep(2)
+                    await slavsound.funcSound(before.channel, i.logOut)
+                else:
+                    print(i.name + " left, but they do not have a leave sound")
+                    print("----------")
+
+
 
 client.run(keys.client)
