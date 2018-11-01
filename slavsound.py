@@ -17,3 +17,12 @@ async def playSound(sound):
         while vc.is_playing():
             pass
         await vc.disconnect()
+    else:
+        await sound.channel.send(sound.author.name + ", you're not in a voice channel, блядь!")
+
+# Play random sound, including the lEgEnDaRy SoUnDs!
+async def randSound(msg):
+    if msg.author.voice: # Check user is in voice channel
+        sounds = await io.readFile(keys.soundList)
+        rSounds = await io.readFile(keys.rSoundList)
+        soundList = sounds + rSounds
