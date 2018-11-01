@@ -6,6 +6,7 @@ __pycache__
 # Actual Slavbot stuff
 sounds/
 keys.py
+regularids.py
 *.dll
 *.txt
 *.exe

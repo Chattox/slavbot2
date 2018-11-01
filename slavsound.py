@@ -4,6 +4,7 @@
 import discord
 import random
 import keys
+import regularids as reg
 import slavio as io
 
 # Play specific sound on command
@@ -13,10 +14,12 @@ async def playSound(sound):
         print("Playing: " + snd + ".mp3")
         print("Connecting to: " + sound.author.voice.channel.name)
         vc = await sound.author.voice.channel.connect()
+        print("Playing...")
         vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"))
         while vc.is_playing():
             pass
         await vc.disconnect()
+        print("Done.")
     else:
         await sound.channel.send(sound.author.name + ", you're not in a voice channel, блядь!")
 
@@ -25,4 +28,16 @@ async def randSound(msg):
     if msg.author.voice: # Check user is in voice channel
         sounds = await io.readFile(keys.soundList)
         rSounds = await io.readFile(keys.rSoundList)
-        soundList = sounds + rSounds
+        soundList = sounds + rSounds # Compile a list of both regular sounds and random-only sounds to pick from
+        snd = random.choice(soundList) # Pick a sound at random from this list
+        print("Playing random sound: " + snd + ".mp3")
+        print("Connecting to: " + msg.author.voice.channel.name)
+        vc = await msg.author.voice.channel.connect()
+        print("Playing...")
+        vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"))
+        while vc.is_playing():
+            pass
+        await vc.disconnect()
+        print("Done.")
+    else:
+        await msg.channel.send(msg.author.name + ", you're not in a voice channel, блядь!")

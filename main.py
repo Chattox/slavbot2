@@ -60,14 +60,21 @@ async def on_message(msg):
         if cmd == "soundhelp": # Format sound list to PM to user
             soundHelp = "\n\!".join(sounds)
             await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
+            await msg.delete()
         if cmd in sounds: # Check if command is in the sound list
             await slavsound.playSound(msg)
+            await msg.delete()
+        if cmd == "rand": # Play a random sound from the extended list
+            await slavsound.randSound(msg)
+            await msg.delete()
 
 
         # TEST TOOL COMMANDS
         if cmd == "read":
             await test.readFileTest(args[0])
+            await msg.delete()
         if cmd == "voice":
             await test.voiceCheck(msg)
+            await msg.delete()
 
 client.run(keys.client)
