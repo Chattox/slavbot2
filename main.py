@@ -61,20 +61,29 @@ async def on_message(msg):
             soundHelp = "\n\!".join(sounds)
             await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
             await msg.delete()
-        if cmd in sounds: # Check if command is in the sound list
+        elif cmd in sounds: # Check if command is in the sound list
             await slavsound.playSound(msg)
             await msg.delete()
-        if cmd == "rand": # Play a random sound from the extended list
+        elif cmd == "rand": # Play a random sound from the extended list
             await slavsound.randSound(msg)
             await msg.delete()
 
 
         # TEST TOOL COMMANDS
-        if cmd == "read":
+        elif cmd == "read":
             await test.readFileTest(args[0])
             await msg.delete()
-        if cmd == "voice":
+        elif cmd == "voice":
             await test.voiceCheck(msg)
             await msg.delete()
+
+
+        # UNRECOGNISED COMMAND
+        else:
+            await msg.author.send(msg.content + " is not a recognised command, урод.")
+            await msg.delete()
+
+        # END OF COMMANDS
+        print("----------")
 
 client.run(keys.client)
