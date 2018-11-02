@@ -11,3 +11,7 @@ async def voiceCheck(msg):
         print("User is in voice channel: " + msg.author.voice.channel.name)
     else:
         print("User is not in voice channel")
+
+# Test user reading function
+async def readUserTest(file):
+    await io.readUser(file)

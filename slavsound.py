@@ -8,7 +8,9 @@ import regularids as reg
 import slavio as io
 
 # Play specific sound on command
-async def playSound(sound):
+async def playSound(sound, client):
+    while client.voice_clients:
+        pass
     if sound.author.voice: # Check user is in voice channel
         snd = sound.content[1:].split(" ")[0]
         print("Playing: " + snd + ".mp3")
@@ -20,11 +22,14 @@ async def playSound(sound):
             pass
         await vc.disconnect()
         print("Done.")
+        print("----------")
     else:
         await sound.channel.send(sound.author.name + ", you're not in a voice channel, блядь!")
 
 # Play random sound, including the lEgEnDaRy SoUnDs!
-async def randSound(msg):
+async def randSound(msg, client):
+    while client.voice_clients:
+        pass
     if msg.author.voice: # Check user is in voice channel
         sounds = await io.readFile(keys.soundList)
         rSounds = await io.readFile(keys.rSoundList)
@@ -39,11 +44,14 @@ async def randSound(msg):
             pass
         await vc.disconnect()
         print("Done.")
+        print("----------")
     else:
         await msg.channel.send(msg.author.name + ", you're not in a voice channel, блядь!")
 
 # Play a specific command passed by a command other than discord message
-async def funcSound(channel, choice):
+async def funcSound(channel, choice, client):
+    while client.voice_clients:
+        pass
     print("Playing sound: " + choice + "\nIn channel: " + channel.name)
     print("Connecting...")
     try:
@@ -55,6 +63,7 @@ async def funcSound(channel, choice):
         await vc.disconnect()
         print("Done.")
         print("----------")
+
     except discord.ClientException:
         print("Too much going on at once!")
         print("----------")

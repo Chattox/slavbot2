@@ -48,6 +48,9 @@ async def on_message(msg):
     if msg.author == client.user:
         return
 
+    while client.voice_clients:
+        pass
+
     if msg.content.startswith("!"):
         # Figure out what command it is and print to stdout, also convert to lowercase for case-insensitivity
         cmd = msg.content[1:].split(" ")[0]
@@ -64,10 +67,10 @@ async def on_message(msg):
             await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
             await msg.delete()
         elif cmd in sounds: # Check if command is in the sound list
-            await slavsound.playSound(msg)
+            await slavsound.playSound(msg, client)
             await msg.delete()
         elif cmd == "rand": # Play a random sound from the extended list
-            await slavsound.randSound(msg)
+            await slavsound.randSound(msg, client)
             await msg.delete()
 
 
@@ -78,6 +81,8 @@ async def on_message(msg):
         elif cmd == "voice":
             await test.voiceCheck(msg)
             await msg.delete()
+        elif cmd == "readuser":
+            await test.readUserTest(args[0])
 
 
         # UNRECOGNISED COMMAND
@@ -108,7 +113,7 @@ async def on_voice_state_update(member, before, after):
                 if i.logIn != "":
                     print(i.name + " joined, playing join sound: " + i.logIn)
                     await asyncio.sleep(1)
-                    await slavsound.funcSound(after.channel, i.logIn)
+                    await slavsound.funcSound(after.channel, i.logIn, client)
                 else:
                     print(i.name + " joined, but they do not have a join sound")
                     print("----------")
@@ -118,7 +123,7 @@ async def on_voice_state_update(member, before, after):
                 if i.logOut != "":
                     print(i.name + " left, playing leave sound: " + i.logOut)
                     await asyncio.sleep(2)
-                    await slavsound.funcSound(before.channel, i.logOut)
+                    await slavsound.funcSound(before.channel, i.logOut, client)
                 else:
                     print(i.name + " left, but they do not have a leave sound")
                     print("----------")
