@@ -6,7 +6,6 @@ import asyncio
 import discord
 from discord import opus
 import keys
-import regularids as regs
 import slavio as io
 import slavsound
 import logging
@@ -96,7 +95,8 @@ async def on_message(msg):
 # Listen for people coming in and out of voice channels for log-in/out sounds
 @client.event
 async def on_voice_state_update(member, before, after):
-    for i in regs.users:
+    regUserList = await io.readUser(keys.regUsers)
+    for i in regUserList:
         if member.id == i.id:
             # Check if user connected to valid channel (came from AFK or new join)
             was_disconnected = before.channel is None or before.afk is True
@@ -114,6 +114,7 @@ async def on_voice_state_update(member, before, after):
                     print(i.name + " joined, playing join sound: " + i.logIn)
                     await asyncio.sleep(1)
                     await slavsound.funcSound(after.channel, i.logIn, client)
+                    print("----------")
                 else:
                     print(i.name + " joined, but they do not have a join sound")
                     print("----------")
@@ -124,6 +125,7 @@ async def on_voice_state_update(member, before, after):
                     print(i.name + " left, playing leave sound: " + i.logOut)
                     await asyncio.sleep(2)
                     await slavsound.funcSound(before.channel, i.logOut, client)
+                    print("----------")
                 else:
                     print(i.name + " left, but they do not have a leave sound")
                     print("----------")

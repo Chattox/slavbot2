@@ -4,10 +4,12 @@ __pycache__
 *.pyc
 
 # Actual Slavbot stuff
+test/
 sounds/
 keys.py
 regularids.py
 *.dll
 *.txt
 *.exe
+*.bat
 slavbot.log

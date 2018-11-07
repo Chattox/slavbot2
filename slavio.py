@@ -1,4 +1,3 @@
-import regularids as regs
 
 # Read file, return list
 async def readFile(file):
@@ -11,10 +10,45 @@ async def readFile(file):
     return(fileList)
 
 # Read file, parse data into regular() instances
+class regular():
+    name = ""
+    id = 0
+    logIn = ""
+    logOut = ""
+    admin = False
+
 async def readUser(file):
-    userList = []
     with open(file, "r") as f:
+        userList = list()
+        userNum = 0
+        regName = ""
+        regID = ""
+        regIn = ""
+        regOut = ""
+        regAdmin = False
         for line in f.readlines():
+            line = line.strip('\n')
             if not line.startswith('#'):
                 lineData = line.split("=")
-                print(lineData[0] + " " + lineData[1])
+                if lineData[0] == "name":
+                    regName = lineData[1]
+                if lineData[0] == "id":
+                    regID = int(lineData[1])
+                if lineData[0] == "logIn":
+                    regIn = lineData[1]
+                if lineData[0] == "logOut":
+                    regOut = lineData[1]
+                if lineData[0] == "admin":
+                    if lineData[1] == "true":
+                        regAdmin = True
+                    else:
+                        regAdmin = False
+            if line.startswith('-'):
+                userList.append(regular())
+                userList[userNum].name = regName
+                userList[userNum].id = regID
+                userList[userNum].logIn = regIn
+                userList[userNum].logOut = regOut
+                userList[userNum].admin = regAdmin
+                userNum+=1
+        return userList

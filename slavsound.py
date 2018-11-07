@@ -4,7 +4,6 @@
 import discord
 import random
 import keys
-import regularids as reg
 import slavio as io
 
 # Play specific sound on command
@@ -22,7 +21,6 @@ async def playSound(sound, client):
             pass
         await vc.disconnect()
         print("Done.")
-        print("----------")
     else:
         await sound.channel.send(sound.author.name + ", you're not in a voice channel, блядь!")
 
@@ -44,7 +42,6 @@ async def randSound(msg, client):
             pass
         await vc.disconnect()
         print("Done.")
-        print("----------")
     else:
         await msg.channel.send(msg.author.name + ", you're not in a voice channel, блядь!")
 
@@ -62,8 +59,6 @@ async def funcSound(channel, choice, client):
             pass
         await vc.disconnect()
         print("Done.")
-        print("----------")
 
     except discord.ClientException:
         print("Too much going on at once!")
-        print("----------")
