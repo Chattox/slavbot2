@@ -35,11 +35,17 @@ async def readUser(file):
                 if lineData[0] == "id":
                     regID = int(lineData[1])
                 if lineData[0] == "logIn":
-                    regIn = lineData[1]
+                    if lineData[1] == "none":
+                        regIn = "none"
+                    else:
+                        regIn = lineData[1]
                 if lineData[0] == "logOut":
-                    regOut = lineData[1]
+                    if lineData[1] == "none":
+                        regOut = "none"
+                    else:
+                        regOut = lineData[1]
                 if lineData[0] == "admin":
-                    if lineData[1] == "true":
+                    if lineData[1] == "True":
                         regAdmin = True
                     else:
                         regAdmin = False

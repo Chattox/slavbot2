@@ -57,10 +57,25 @@ async def on_message(msg):
         cmd = cmd.lower()
         print('COMMAND: %s' % (cmd))
         print('FROM: ' + msg.author.name)
+        # Check if user has admin permission
+        regUserList = await io.readUser(keys.regUsers)
+        for i in regUserList:
+            print("Checking user: " + i.name)
+            if i.id == msg.author.id:
+                print("ID match")
+                if i.admin == True:
+                    print("Is admin")
+                    isAdmin = True
+                else:
+                    print("Is not admin")
+                    isAdmin = False
 
         # SOUND COMMANDS
         # Load sound list from file for checking against command
-        sounds = await io.readFile(keys.soundList)
+        if isAdmin == True:
+            sounds = await io.readFile(keys.soundList) + await io.readFile(keys.rSoundList)
+        else:
+            sounds = await io.readFile(keys.soundList)
         if cmd == "soundhelp": # Format sound list to PM to user
             soundHelp = "\n\!".join(sounds)
             await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
@@ -110,7 +125,7 @@ async def on_voice_state_update(member, before, after):
 
             # If user connected to valid channel, play their join sound
             if was_connect:
-                if i.logIn != "":
+                if i.logIn != "none":
                     print(i.name + " joined, playing join sound: " + i.logIn)
                     await asyncio.sleep(1)
                     await slavsound.funcSound(after.channel, i.logIn, client)
@@ -121,7 +136,7 @@ async def on_voice_state_update(member, before, after):
 
             # If user disconnected from valid channel, play their leave sound
             if was_disconnect:
-                if i.logOut != "":
+                if i.logOut != "none":
                     print(i.name + " left, playing leave sound: " + i.logOut)
                     await asyncio.sleep(2)
                     await slavsound.funcSound(before.channel, i.logOut, client)
