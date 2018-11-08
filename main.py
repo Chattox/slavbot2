@@ -60,14 +60,14 @@ async def on_message(msg):
         # Check if user has admin permission
         regUserList = await io.readUser(keys.regUsers)
         for i in regUserList:
-            print("Checking user: " + i.name)
+            # print("Checking user: " + i.name)
             if i.id == msg.author.id:
-                print("ID match")
+                # print("ID match")
                 if i.admin == True:
-                    print("Is admin")
+                    # print("Is admin")
                     isAdmin = True
                 else:
-                    print("Is not admin")
+                    # print("Is not admin")
                     isAdmin = False
 
         # SOUND COMMANDS
