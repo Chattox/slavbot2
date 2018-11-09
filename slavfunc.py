@@ -29,7 +29,14 @@ async def dedmoroz(client):
     reaction = message.reactions
     memberList = list()
 
+    # Now get the people who reacted to the message, and add them to the list of participants
     async for user in reaction[0].users():
         memberList.append(user)
     for member in memberList:
         print(member.name)
+    # Randomly assign recipients
+    random.shuffle(memberList)
+    i = 0
+    while i < len(memberList):
+        print(memberList[i].name + " gets " + memberList[(i+1)%len(memberList)].name)
+        i+=1
