@@ -90,7 +90,8 @@ async def on_message(msg):
 
         # FUNCTION COMMANDS
         if cmd == "dedmoroz":
-            await func.dedmoroz(args[0])
+            # await func.dedmoroz(args[0])
+            await func.dedmoroz(client)
 
 
         # TEST TOOL COMMANDS
