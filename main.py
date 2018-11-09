@@ -8,6 +8,7 @@ from discord import opus
 import keys
 import slavio as io
 import slavsound
+import slavfunc as func
 import logging
 import testtools as test
 
@@ -86,6 +87,10 @@ async def on_message(msg):
         elif cmd == "rand": # Play a random sound from the extended list
             await slavsound.randSound(msg, client)
             await msg.delete()
+
+        # FUNCTION COMMANDS
+        if cmd == "dedmoroz":
+            await func.dedmoroz(args[0])
 
 
         # TEST TOOL COMMANDS
