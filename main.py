@@ -89,9 +89,9 @@ async def on_message(msg):
             await msg.delete()
 
         # FUNCTION COMMANDS
-        if cmd == "dedmoroz":
-            # await func.dedmoroz(args[0])
+        elif cmd == "dedmoroz":
             await func.dedmoroz(client)
+            await msg.delete()
 
 
         # TEST TOOL COMMANDS
