@@ -38,5 +38,5 @@ async def dedmoroz(client):
     random.shuffle(memberList)
     i = 0
     while i < len(memberList):
-        print(memberList[i].name + " gets " + memberList[(i+1)%len(memberList)].name)
+        await memberList[i].send("This is a test, and your test is " + memberList[(i+1)%len(memberList)].name)
         i+=1
