@@ -5,25 +5,10 @@ import random
 import discord
 import keys
 
-# Secret gibb with beard
-# async def dedmoroz(file):
-#     # Load participants into a list from file
-#     memberList = list()
-#     with open(file, "r") as f:
-#         if not line.startswith('#'):
-#             for line in f.readlines():
-#                 line = line.strip('\n')
-#                 memberList.append(line)
-#     # Randomly assign gifter/giftee pairs
-#     random.shuffle(memberList)
-#     i = 0
-#     while i < len(memberList):
-#         print(memberList[i] + " gets " + memberList[(i+1)%len(memberList)])
-#         i+=1
-
+# Secret gibb with beard 2018
 async def dedmoroz(client):
-    # First get the message which people have reacted to. In this case I'm just using explicit IDs because
-    # I'm lazy.
+    # First get the message which people have reacted to. In this case I'm just using explicit IDs for the
+    # channel and message because I'm lazy.
     channel = client.get_channel(keys.shamefur)
     message = await channel.get_message(keys.santaMsg)
     reaction = message.reactions
@@ -38,5 +23,12 @@ async def dedmoroz(client):
     random.shuffle(memberList)
     i = 0
     while i < len(memberList):
-        await memberList[i].send("This is a test, and your test is " + memberList[(i+1)%len(memberList)].name)
+        await memberList[i].send("Welcome to Secret Slavbot 2018!\n"+
+                                 "Your giftee this year is **" + memberList[(i + 1) % len(memberList)].name + "**!\n"+
+                                 "The rules are:\n"+
+                                 "1) Send your gift on the *second* day of the Steam Winter Sale. This allows people to look through the store for the perfect gift!\n"+
+                                 "2) Don't spend more than £15, give or take £2.\n"+
+                                 "3) Make sure to update your own Steam wishlist to make it easier for your gifter!\n"+
+                                 "4) Don't tell anyone who you got in the raffle!")
+
         i+=1
