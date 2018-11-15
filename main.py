@@ -11,6 +11,7 @@ import slavsound
 import slavfunc as func
 import logging
 import testtools as test
+import shlex
 
 # Create logger, output log to file
 logger = logging.getLogger('discord')
@@ -54,7 +55,7 @@ async def on_message(msg):
     if msg.content.startswith("!"):
         # Figure out what command it is and print to stdout, also convert to lowercase for case-insensitivity
         cmd = msg.content[1:].split(" ")[0]
-        args = msg.content.split(" ")[1:]
+        args = shlex.split(msg.content)[1:]
         cmd = cmd.lower()
         print('COMMAND: %s' % (cmd))
         print('FROM: ' + msg.author.name)
@@ -92,6 +93,14 @@ async def on_message(msg):
         elif cmd == "dedmoroz":
             await func.dedmoroz(client)
             await msg.delete()
+        elif cmd == "migrate":
+            if isAdmin == True:
+                await func.migrate(client, msg, args[0], args[1])
+                await msg.delete()
+            else:
+                await msg.author.send("YOU'RE NOT MY REAL DAD")
+                await msg.delete()
+
 
 
         # TEST TOOL COMMANDS

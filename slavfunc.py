@@ -4,6 +4,7 @@
 import random
 import discord
 import keys
+import slavsound
 
 # Secret gibb with beard 2018
 async def dedmoroz(client):
@@ -32,3 +33,15 @@ async def dedmoroz(client):
                                  "4) Don't tell anyone who you got in the raffle!")
 
         i+=1
+
+# Command to migrate all members of one channel to another.
+async def migrate(client, msg, origin, destination):
+    before = discord.utils.get(msg.guild.voice_channels, name=origin)
+    after = discord.utils.get(msg.guild.voice_channels, name=destination)
+    try:
+        print("Moving all members from \"%s\" to \"%s\"" % (before.name, after.name))
+        await slavsound.funcSound(before, "leeroy", client)
+        for user in before.members:
+            await user.move_to(after)
+    except AttributeError:
+        await msg.author.send("One of the channels is not recognised!")
