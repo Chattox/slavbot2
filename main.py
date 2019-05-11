@@ -79,8 +79,7 @@ async def on_message(msg):
         else:
             sounds = await io.readFile(keys.soundList)
         if cmd == "soundhelp": # Format sound list to PM to user
-            soundHelp = "\n\!".join(sounds)
-            await msg.author.send("Opaaa, have some sound commands: \n\!"+soundHelp)
+            await func.soundhelp(msg, isAdmin)
             await msg.delete()
         elif cmd in sounds: # Check if command is in the sound list
             await slavsound.playSound(msg, client)
@@ -112,6 +111,9 @@ async def on_message(msg):
             await msg.delete()
         elif cmd == "readuser":
             await test.readUserTest(args[0])
+        elif cmd == "testhelp":
+            await test.testHelp(msg)
+            await msg.delete()
 
 
         # UNRECOGNISED COMMAND

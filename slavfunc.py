@@ -5,6 +5,7 @@ import random
 import discord
 import keys
 import slavsound
+import slavio as io
 
 # Secret gibb with beard 2018
 async def dedmoroz(client):
@@ -45,3 +46,18 @@ async def migrate(client, msg, origin, destination):
             await user.move_to(after)
     except AttributeError:
         await msg.author.send("One of the channels is not recognised!")
+
+# Sound help: Actually Works™ edition
+async def soundhelp(msg, isAdmin):
+    sounds = await io.readFile(keys.soundList)
+    if isAdmin:
+        sounds = sounds + await io.readFile(keys.rSoundList)
+    soundHelp = []
+    soundHelpMsg = ""
+    for i in sounds:
+        soundHelp.append(i)
+        soundHelpMsg = "\n\!".join(soundHelp)
+        if len(soundHelpMsg) > 1800:
+            await msg.author.send("\n\!"+soundHelpMsg)
+            soundHelp.clear()
+    await msg.author.send("\n\!"+soundHelpMsg)
