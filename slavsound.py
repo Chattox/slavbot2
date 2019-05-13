@@ -5,6 +5,7 @@ import discord
 import random
 import keys
 import slavio as io
+import time
 
 # Play specific sound on command
 async def playSound(sound, client):
@@ -16,9 +17,9 @@ async def playSound(sound, client):
         print("Connecting to: " + sound.author.voice.channel.name)
         vc = await sound.author.voice.channel.connect()
         print("Playing...")
-        vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"))
+        vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"), after=lambda e: print('done', e))
         while vc.is_playing():
-            pass
+            time.sleep(0.5)
         await vc.disconnect()
         print("Done.")
     else:
@@ -37,9 +38,9 @@ async def randSound(msg, client):
         print("Connecting to: " + msg.author.voice.channel.name)
         vc = await msg.author.voice.channel.connect()
         print("Playing...")
-        vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"))
+        vc.play(discord.FFmpegPCMAudio("./sounds/" + snd + ".mp3"), after=lambda e: print('done', e))
         while vc.is_playing():
-            pass
+            time.sleep(0.5)
         await vc.disconnect()
         print("Done.")
     else:
@@ -54,9 +55,9 @@ async def funcSound(channel, choice, client):
     try:
         vc = await channel.connect()
         print("Playing...")
-        vc.play(discord.FFmpegPCMAudio("./sounds/" + choice + ".mp3"))
+        vc.play(discord.FFmpegPCMAudio("./sounds/" + choice + ".mp3"), after=lambda e: print('done', e))
         while vc.is_playing():
-            pass
+            time.sleep(0.5)
         await vc.disconnect()
         print("Done.")
 
