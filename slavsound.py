@@ -26,14 +26,14 @@ async def playSound(sound, client):
         await sound.channel.send(sound.author.name + ", you're not in a voice channel, блядь!")
 
 # Play random sound, including the lEgEnDaRy SoUnDs!
-async def randSound(msg, client):
+async def randSound(msg, client, sndList):
     while client.voice_clients:
         pass
     if msg.author.voice: # Check user is in voice channel
-        sounds = await io.readFile(keys.soundList)
-        rSounds = await io.readFile(keys.rSoundList)
-        soundList = sounds + rSounds # Compile a list of both regular sounds and random-only sounds to pick from
-        snd = random.choice(soundList) # Pick a sound at random from this list
+        # sounds = await io.readFile(keys.soundList)
+        # rSounds = await io.readFile(keys.rSoundList)
+        # soundList = sounds + rSounds # Compile a list of both regular sounds and random-only sounds to pick from
+        snd = random.choice(sndList) # Pick a sound at random from this list
         print("Playing random sound: " + snd + ".mp3")
         print("Connecting to: " + msg.author.voice.channel.name)
         vc = await msg.author.voice.channel.connect()

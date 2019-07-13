@@ -12,6 +12,7 @@ import slavfunc as func
 import logging
 import testtools as test
 import shlex
+import random
 
 # Create logger, output log to file
 logger = logging.getLogger('discord')
@@ -85,7 +86,12 @@ async def on_message(msg):
             await slavsound.playSound(msg, client)
             await msg.delete()
         elif cmd == "rand": # Play a random sound from the extended list
-            await slavsound.randSound(msg, client)
+            randSound = await io.readFile(keys.soundList) + await io.readFile(keys.rSoundList)
+            await slavsound.randSound(msg, client, randSound)
+            await msg.delete()
+        elif cmd == "randomaly": # Play a random anomaly sound
+            randomalySound = await io.readFile(keys.anomalyList)
+            await slavsound.randSound(msg, client, randomalySound)
             await msg.delete()
 
         # FUNCTION COMMANDS
@@ -142,14 +148,20 @@ async def on_voice_state_update(member, before, after):
 
             # If user connected to valid channel, play their join sound
             if was_connect:
+                if i.name == "smord":
+                    anomList = await io.readFile(keys.anomalyList)
+                    snd = random.choice(anomList)
+                    print(i.name + " joined, playing random Anomaly sound: " + snd)
+                    await asyncio.sleep(1)
+                    await slavsound.funcSound(after.channel, snd, client)
                 if i.logIn != "none":
                     print(i.name + " joined, playing join sound: " + i.logIn)
                     await asyncio.sleep(1)
                     await slavsound.funcSound(after.channel, i.logIn, client)
                     print("----------")
-                else:
-                    print(i.name + " joined, but they do not have a join sound")
-                    print("----------")
+                # else:
+                #     print(i.name + " joined, but they do not have a join sound")
+                #     print("----------")
 
             # If user disconnected from valid channel, play their leave sound
             if was_disconnect:
