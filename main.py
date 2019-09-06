@@ -155,12 +155,13 @@ async def on_voice_state_update(member, before, after):
             is_disconnected = after.channel is None and before.afk is False
             was_disconnect = was_connected and is_disconnected
 
-            # Print time
-            currentTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print(currentTime)
+
 
             # If user connected to valid channel, play their join sound
             if was_connect:
+                # Print time
+                currentTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                print(currentTime)
                 if i.name == "smord":
                     anomList = await io.readFile(keys.anomalyList)
                     snd = random.choice(anomList)
@@ -178,6 +179,9 @@ async def on_voice_state_update(member, before, after):
 
             # If user disconnected from valid channel, play their leave sound
             if was_disconnect:
+                # Print time
+                currentTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                print(currentTime)
                 if i.logOut != "none":
                     print(i.name + " left, playing leave sound: " + i.logOut)
                     await asyncio.sleep(2)
