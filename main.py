@@ -13,6 +13,7 @@ import logging
 import testtools as test
 import shlex
 import random
+from datetime import datetime
 
 # Create logger, output log to file
 logger = logging.getLogger('discord')
@@ -54,6 +55,9 @@ async def on_message(msg):
         pass
 
     if msg.content.startswith("!"):
+        # Print timestamp
+        currentTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(currentTime)
         # Figure out what command it is and print to stdout, also convert to lowercase for case-insensitivity
         cmd = msg.content[1:].split(" ")[0]
         args = shlex.split(msg.content)[1:]
@@ -93,6 +97,11 @@ async def on_message(msg):
             randomalySound = await io.readFile(keys.anomalyList)
             await slavsound.randSound(msg, client, randomalySound)
             await msg.delete()
+        elif cmd == "randime": # Play a random anime sound
+            randimeSound = await io.readFile(keys.animeList)
+            await slavsound.randSound(msg, client, randimeSound)
+            await msg.delete()
+
 
         # FUNCTION COMMANDS
         elif cmd == "dedmoroz":
@@ -145,6 +154,10 @@ async def on_voice_state_update(member, before, after):
             was_connected = before.channel is not None and before.afk is False
             is_disconnected = after.channel is None and before.afk is False
             was_disconnect = was_connected and is_disconnected
+
+            # Print time
+            currentTime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(currentTime)
 
             # If user connected to valid channel, play their join sound
             if was_connect:
